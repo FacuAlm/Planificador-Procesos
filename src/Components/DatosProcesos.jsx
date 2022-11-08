@@ -8,7 +8,7 @@ const DatosProcesos = ({ proceso }) => {
       <Statistic title="Instante de Entrada" value={proceso?.instanteEntrada} />
     </Col>
     <Col span={12}>
-      <Statistic title="Rafagas de CPU" value={proceso?.rafagas} />
+      <Statistic title="Rafaga de CPU" value={proceso?.rafaga} />
      
     </Col>
     <Col span={12}>

@@ -1,3 +1,25 @@
 {
-  "procesos": []
+  "procesos": [
+    {
+      "nombreProceso": "Ejecutar Spotify",
+      "instanteEntrada": 3,
+      "prioridad": 0,
+      "rafaga": 4,
+      "id": 1
+    },
+    {
+      "nombreProceso": "Ejecutar Word",
+      "instanteEntrada": 1,
+      "prioridad": 0,
+      "rafaga": 6,
+      "id": 2
+    },
+    {
+      "nombreProceso": "Ejecutar Power Point",
+      "instanteEntrada": 2,
+      "prioridad": 0,
+      "rafaga": 1,
+      "id": 3
+    }
+  ]
 }

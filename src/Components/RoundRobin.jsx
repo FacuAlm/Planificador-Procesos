@@ -5,12 +5,43 @@ import { obtenerProcesos } from '../api/procesos';
 
 const resultado = await obtenerProcesos();
 
+function calcularRoundRobin() {
+  let quantum = 2;
+  let tiempo = 0;
+  
+
+  resultado.map((proceso, index) => {
+    if (index == 0) {
+      proceso.tiempoEspera = 0;
+      proceso.tiempoRetorno = proceso.rafaga;
+    } else {
+      proceso.tiempoEspera =
+        resultado[index - 1].tiempoEspera + resultado[index - 1].rafaga;
+      proceso.tiempoRetorno =
+        proceso.tiempoEspera + proceso.rafaga;
+    }
+  }
+  );
+  console.log(resultado);
+
+  return resultado;
+    
+
+ 
+
+}
+
+
+
+
+
 
 
 const RoundRobin = () => {
-  const data = resultado.map((proceso) => ({
-    type: `${proceso.id} - ${proceso.nombreProceso}`,
-    values: [parseInt(proceso.instanteEntrada), parseInt(proceso.instanteEntrada) + parseInt(proceso.rafagas)],
+  const data = calcularRoundRobin().map((proceso) => ({
+    type: proceso.nombreProceso,
+    values: [proceso.tiempoEspera, proceso.tiempoRetorno],
+
   }));
   const config = {
     data: data,
