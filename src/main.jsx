@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import InfoProceso,{loader as infoProcesoLoader} from './pages/InfoProceso'
+import InfoProceso, { loader as InfoProcesoLoader } from './pages/InfoProceso'
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
-  { path: '/procesos/:procesoId', element: <InfoProceso />, loader: infoProcesoLoader },
+  { path: '/procesos/:procesoId', element: <InfoProceso />, loader: InfoProcesoLoader },
 
 
 ])

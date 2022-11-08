@@ -6,19 +6,25 @@ import Spn from './Spn';
 import Srt from './Srt';
 
 const TabsAlgorithms = () => (
-  <Tabs defaultActiveKey="1" className='tabs'>
+  
+  <Tabs defaultActiveKey="1" >
     <Tabs.TabPane tab="FIFO" key="1">
       <Fifo />
     </Tabs.TabPane>
-    <Tabs.TabPane tab="Round Robin" key="2">
-      <RoundRobin />
-    </Tabs.TabPane>
-    <Tabs.TabPane tab="SPN" key="3">
+    <Tabs.TabPane tab="SPN" key="2">
       <Spn />
     </Tabs.TabPane>
-    <Tabs.TabPane tab="SRT" key="4">
+    <Tabs.TabPane tab="SRT" key="3">
       <Srt />
     </Tabs.TabPane>
+    <Tabs.TabPane tab="Round Robin" key="4">
+      <RoundRobin />
+    </Tabs.TabPane>
   </Tabs>
+  
+  
+
+      
+  
 );
 export default TabsAlgorithms;

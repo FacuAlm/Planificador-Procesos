@@ -1,26 +1,26 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber } from 'antd';
 import React, { useState } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import {agregarProceso} from '../api/procesos';
+import { agregarProceso } from '../api/procesos';
 
 const ProcessForm = () => {
     const [form] = Form.useForm();
-    
+
     const onReset = () => {
         form.resetFields();
-      };
-    
+    };
+
 
 
     const onFinish = (values) => {
-        
+
 
         let data = {
             nombreProceso: values.nombreProceso,
-            instanteEntrada: Number(values.instanteEntrada),
-            prioridad: Number(values.prioridad),
+            instanteEntrada: values.instanteEntrada,
+            prioridad: values.prioridad,
             rafagas: values.rafagas
-            
+
         };
 
         console.log(data);
@@ -28,11 +28,11 @@ const ProcessForm = () => {
         agregarProceso(data);
 
         onReset();
-        
-     
-        
-        
-        
+
+
+
+
+
     };
 
     const formItemLayout = {
@@ -77,7 +77,7 @@ const ProcessForm = () => {
     };
     return (
         <Form
-            
+
 
             name="basic"
             labelCol={{
@@ -96,7 +96,7 @@ const ProcessForm = () => {
             autoComplete="off"
 
             form={form}
-            
+
 
 
 
@@ -128,20 +128,23 @@ const ProcessForm = () => {
                     },
                 ]}
             >
-                <Input />
+                <InputNumber />
 
             </Form.Item>
 
             <Form.Item
                 label="Prioridad"
+
                 name="prioridad"
                 rules={[
                     {
-
+                        required: true,
+                        message: 'Por favor ingrese la prioridad',
                     },
                 ]}
             >
-                <Input />
+
+                <InputNumber />
 
             </Form.Item>
 
@@ -168,29 +171,26 @@ const ProcessForm = () => {
                         {fields.map((field, index) => (
                             <Form.Item
                                 {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                                label={index === 0 ? 'Entradas' : ''}
+                                label={index === 0 ? 'Rafagas' : ''}
                                 required={false}
                                 key={field.key}
                             >
                                 <Form.Item
+
                                     {...field}
                                     validateTrigger={['onChange', 'onBlur']}
                                     rules={[
                                         {
                                             required: true,
-                                            whitespace: true,
-                                            message: "Ingrese una rafaga o elimine este campo.",
+
                                         },
                                     ]}
                                     noStyle
                                 >
-                                    <Input
-                                        placeholder={`Rafagas ${index + 1}`}
-                                        style={{
-                                            width: '80%',
-                                        }}
-                                    />
+                                    <InputNumber style={{ width: '60%' }} />
                                 </Form.Item>
+
+
                                 {fields.length > 0 ? (
                                     <MinusCircleOutlined
                                         className="dynamic-delete-button"
@@ -216,6 +216,10 @@ const ProcessForm = () => {
                     </>
                 )}
             </Form.List>
+
+
+
+
 
 
 
