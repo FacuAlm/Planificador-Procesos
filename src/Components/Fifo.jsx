@@ -19,10 +19,10 @@ function calcularFIFO() {
   resultado.map((proceso, index) => {
     if (index == 0) {
       proceso.tiempoEspera = 0;
-      proceso.tiempoRetorno = proceso.rafaga;
+      proceso.tiempoRetorno = proceso.rafaga-1;
     } else {
       proceso.tiempoEspera =
-        resultado[index - 1].tiempoEspera + resultado[index - 1].rafaga;
+        resultado[index - 1].tiempoEspera + resultado[index - 1].rafaga - 1;
 
       proceso.tiempoRetorno = proceso.tiempoEspera + proceso.rafaga;
     }
