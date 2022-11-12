@@ -5,31 +5,34 @@ import { obtenerProcesos } from "../api/procesos";
 
 const resultado = await obtenerProcesos();
 
-let resultadoOrdenado = resultado.sort((a, b) => a.instanteEntrada - b.instanteEntrada);
+let resultadoOrdenado = resultado.sort(
+  (a, b) => a.instanteEntrada - b.instanteEntrada
+);
 
 console.table(resultadoOrdenado);
 
 function calcularFIFO() {
   
-
   let tiempo = 0;
   let tiempoEspera = 0;
   let tiempoRetorno = 0;
 
-  resultado.map((proceso, index) => {
+  resultadoOrdenado.map((proceso, index) => {
     if (index == 0) {
       proceso.tiempoEspera = 0;
-      proceso.tiempoRetorno = proceso.rafaga-1;
+      proceso.tiempoRetorno = proceso.rafaga;
     } else {
       proceso.tiempoEspera =
-        resultado[index - 1].tiempoEspera + resultado[index - 1].rafaga - 1;
-
-      proceso.tiempoRetorno = proceso.tiempoEspera + proceso.rafaga;
+        resultadoOrdenado[index - 1].tiempoEspera +
+        resultadoOrdenado[index - 1].rafaga;
+      proceso.tiempoRetorno =
+        proceso.tiempoEspera + proceso.rafaga;
     }
   });
-  console.log(resultado);
 
-  return resultado;
+ 
+
+  return resultadoOrdenado;
 }
 
 const Fifo = () => {
@@ -43,6 +46,14 @@ const Fifo = () => {
     xField: "values",
     yField: "type",
     isRange: true,
+    label: {
+      position: "middle",
+      layout: [
+        {
+          type: "adjust-color",
+        },
+      ],
+    },
   };
 
   return <Bar {...config} />;

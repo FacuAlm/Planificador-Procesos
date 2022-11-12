@@ -1,31 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { Bar } from '@ant-design/plots';
-import { obtenerProcesos } from '../api/procesos';
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import { Bar } from "@ant-design/plots";
+import { obtenerProcesos } from "../api/procesos";
 
 const resultado = await obtenerProcesos();
 
+function calcularSPN() {
+  let tiempo = 0;
 
+  resultado.map((proceso, index) => {
+    if (index == 0) {
+      proceso.tiempoEspera = 0;
+      proceso.tiempoRetorno = proceso.rafaga;
+      tiempo = proceso.rafaga;
+    } else {
+      proceso.tiempoEspera = tiempo;
+      proceso.tiempoRetorno = tiempo + proceso.rafaga;
+      tiempo = tiempo + proceso.rafaga;
+
+      if (tiempo > proceso.instanteEntrada) {
+        tiempo = tiempo - proceso.instanteEntrada;
+
+        proceso.tiempoEspera = resultado[index - 1].tiempoRetorno
+
+        proceso.tiempoRetorno = proceso.tiempoEspera + proceso.rafaga;
+
+      
+
+        
+    }
+
+    
+
+
+    }
+  });
+
+  console.table(resultado);
+  return resultado;
+}
 
 const Spn = () => {
-  const data = resultado.map((proceso) => ({
-    type: `${proceso.id} - ${proceso.nombreProceso}`,
-    values: [parseInt(proceso.instanteEntrada), parseInt(proceso.instanteEntrada) + parseInt(proceso.rafagas)],
+  const data = calcularSPN().map((proceso, index) => ({
+    type: "Proceso " + proceso.id,
+    values: [proceso.tiempoEspera, proceso.tiempoRetorno],
   }));
-
-
-
 
   const config = {
     data: data,
-    xField: 'values',
-    yField: 'type',
+    xField: "values",
+    yField: "type",
     isRange: true,
     label: {
-      position: 'middle',
+      position: "middle",
       layout: [
         {
-          type: 'adjust-color',
+          type: "adjust-color",
         },
       ],
     },

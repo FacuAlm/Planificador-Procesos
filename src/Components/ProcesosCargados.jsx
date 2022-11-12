@@ -10,7 +10,7 @@ const resultado = await obtenerProcesos();
 const data = resultado.map((proceso) => ({
     id: proceso.id,
   title: `${proceso.id} - ${proceso.nombreProceso}`,
-  description: `Instante de entrada: ${proceso.instanteEntrada} - Prioridad: ${proceso.prioridad} - Rafaga: ${proceso.rafaga}`,
+  description: `Instante de entrada: ${proceso.instanteEntrada} - Rafaga: ${proceso.rafaga}`,
 }));
 
 const ProcesosCargados = () => {

@@ -10,11 +10,12 @@ const ProcessForm = () => {
   };
 
   const onFinish = (values) => {
+    
     let data = {
       nombreProceso: values.nombreProceso,
       instanteEntrada: values.instanteEntrada,
-      prioridad: values.prioridad,
       rafaga: values.rafaga,
+      quantum: values.quantum,
     };
 
     console.log(data);
@@ -23,8 +24,6 @@ const ProcessForm = () => {
 
     onReset();
   };
-
- 
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -40,6 +39,7 @@ const ProcessForm = () => {
       }}
       initialValues={{
         remember: true,
+        quantum : 1
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -73,19 +73,6 @@ const ProcessForm = () => {
       </Form.Item>
 
       <Form.Item
-        label="Prioridad"
-        name="prioridad"
-        rules={[
-          {
-            required: true,
-            message: "Por favor ingrese la prioridad",
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
-
-      <Form.Item
         label="Rafaga"
         name="rafaga"
         rules={[
@@ -97,6 +84,21 @@ const ProcessForm = () => {
       >
         <InputNumber />
       </Form.Item>
+
+      <Form.Item
+        label="Quantum (RR)"
+        name="quantum"
+        rules={[
+          {
+            required: true,
+            message: "Por favor ingrese el quantum",
+          },
+        ]}
+      >
+        <InputNumber />
+      </Form.Item>
+
+      <p>El valor por default del quantum es 1</p>
 
       <Form.Item
         wrapperCol={{
