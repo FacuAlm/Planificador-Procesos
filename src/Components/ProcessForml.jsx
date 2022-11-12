@@ -15,7 +15,7 @@ const ProcessForm = () => {
       nombreProceso: values.nombreProceso,
       instanteEntrada: values.instanteEntrada,
       rafaga: values.rafaga,
-      quantum: values.quantum,
+      
     };
 
     console.log(data);
@@ -85,21 +85,7 @@ const ProcessForm = () => {
         <InputNumber />
       </Form.Item>
 
-      <Form.Item
-        label="Quantum (RR)"
-        name="quantum"
-        rules={[
-          {
-            required: true,
-            message: "Por favor ingrese el quantum",
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
-
-      <p>El valor por default del quantum es 1</p>
-
+      
       <Form.Item
         wrapperCol={{
           offset: 8,
