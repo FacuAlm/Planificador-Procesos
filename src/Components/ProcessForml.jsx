@@ -39,7 +39,7 @@ const ProcessForm = () => {
       }}
       initialValues={{
         remember: true,
-        quantum : 1
+        
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}

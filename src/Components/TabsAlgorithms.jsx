@@ -15,7 +15,7 @@ const TabsAlgorithms = () => (
     <Tabs.TabPane tab="First In First Out (FIFO)" key="1">
       <Fifo />
     </Tabs.TabPane>
-    <Tabs.TabPane tab={`Round Robin (RR) q=${resultado[0].quantum}`} key="2">
+    <Tabs.TabPane tab="Round Robin (RR)" key="2">
       <RoundRobin />
     </Tabs.TabPane>
     <Tabs.TabPane tab="Short Process Next (SPN)" key="3">
