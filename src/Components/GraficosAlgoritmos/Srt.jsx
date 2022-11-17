@@ -75,32 +75,7 @@ function shortRemainingTimeFirst(procesos) {
 }
 
 const Srt = () => {
-  const data = [
-    {
-      type: "Proceso 1",
-      values: [0, 2],
-    },
-    {
-      type: "Proceso 2",
-      values: [2, 3],
-    },
-    {
-      type: "Proceso 3",
-      values: [3, 7],
-    },
-    {
-      type: "Proceso 5",
-      values: [7, 9],
-    },
-    {
-      type: "Proceso 2",
-      values: [9, 14],
-    },
-    {
-      type: "Proceso 4",
-      values: [14, 19],
-    },
-  ]
+  const data = []
 
   const config = {
     data: data,
