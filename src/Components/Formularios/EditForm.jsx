@@ -1,4 +1,4 @@
-import { obtenerProceso, editarProceso } from "../api/procesos";
+import { obtenerProceso, editarProceso } from "../../api/procesos";
 import { Button, Checkbox, Form, Input, InputNumber } from "antd";
 import React, { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
@@ -21,7 +21,6 @@ const EditForm = () => {
   const [form] = Form.useForm();
   const proceso = useLoaderData();
   const navigate = useNavigate();
-  console.log(proceso);
 
   const onReset = () => {
     form.resetFields();
@@ -31,11 +30,8 @@ const EditForm = () => {
     let data = {
       nombreProceso: values.nombreProceso,
       instanteEntrada: values.instanteEntrada,
-      prioridad: values.prioridad,
       rafaga: values.rafaga,
     };
-
-    console.log(data);
 
     editarProceso(proceso.id, data);
     return navigate("/");
@@ -59,7 +55,6 @@ const EditForm = () => {
 
           nombreProceso: proceso?.nombreProceso,
           instanteEntrada: proceso?.instanteEntrada,
-          prioridad: proceso?.prioridad,
           rafaga: proceso?.rafaga,
         }}
         onFinish={onFinish}
@@ -87,19 +82,6 @@ const EditForm = () => {
             {
               required: true,
               message: "Por favor ingrese el instante de entrada",
-            },
-          ]}
-        >
-          <InputNumber />
-        </Form.Item>
-
-        <Form.Item
-          label="Prioridad"
-          name="prioridad"
-          rules={[
-            {
-              required: true,
-              message: "Por favor ingrese la prioridad",
             },
           ]}
         >

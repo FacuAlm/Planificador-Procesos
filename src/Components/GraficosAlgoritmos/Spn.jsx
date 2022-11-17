@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Bar } from "@ant-design/plots";
-import { obtenerProcesos } from "../api/procesos";
+import { obtenerProcesos } from "../../api/procesos";
 
 const resultado = await obtenerProcesos();
 
@@ -15,28 +15,19 @@ function calcularSPN() {
       tiempo = proceso.rafaga;
     } else {
       proceso.tiempoEspera = tiempo;
-      proceso.tiempoRetorno = tiempo + proceso.rafaga;
+      proceso.tiempoRetorno = tiempo + proceso.rafaga + 3;
       tiempo = tiempo + proceso.rafaga;
 
       if (tiempo > proceso.instanteEntrada) {
         tiempo = tiempo - proceso.instanteEntrada;
 
-        proceso.tiempoEspera = resultado[index - 1].tiempoRetorno
+        proceso.tiempoEspera = resultado[index - 1].tiempoRetorno;
 
         proceso.tiempoRetorno = proceso.tiempoEspera + proceso.rafaga;
-
-      
-
-        
-    }
-
-    
-
-
+      }
     }
   });
 
-  console.table(resultado);
   return resultado;
 }
 

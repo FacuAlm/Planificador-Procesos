@@ -45,3 +45,30 @@ export async function eliminarProceso(id) {
 
   await respuesta.json();
 }
+
+export async function eliminarTodosProcesos() {
+  const respuesta = await fetch(import.meta.env.VITE_API_URL, {
+    method: "DELETE",
+  });
+
+  await respuesta.json();
+}
+
+export async function agregarQuantum(data) {
+  const respuesta = await fetch(import.meta.env.VITE_API_QUANTUM, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  await respuesta.json();
+}
+
+export async function obtenerQuantum() {
+  const respuesta = await fetch(import.meta.env.VITE_API_QUANTUM);
+  const resultado = await respuesta.json();
+
+  return resultado;
+}

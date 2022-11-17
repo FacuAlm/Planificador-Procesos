@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Bar } from "@ant-design/plots";
-import { obtenerProcesos } from "../api/procesos";
+import { obtenerProcesos } from "../../api/procesos";
 
 const resultado = await obtenerProcesos();
 
@@ -9,10 +9,7 @@ let resultadoOrdenado = resultado.sort(
   (a, b) => a.instanteEntrada - b.instanteEntrada
 );
 
-console.table(resultadoOrdenado);
-
 function calcularFIFO() {
-  
   let tiempo = 0;
   let tiempoEspera = 0;
   let tiempoRetorno = 0;
@@ -25,12 +22,9 @@ function calcularFIFO() {
       proceso.tiempoEspera =
         resultadoOrdenado[index - 1].tiempoEspera +
         resultadoOrdenado[index - 1].rafaga;
-      proceso.tiempoRetorno =
-        proceso.tiempoEspera + proceso.rafaga;
+      proceso.tiempoRetorno = proceso.tiempoEspera + proceso.rafaga;
     }
   });
-
- 
 
   return resultadoOrdenado;
 }

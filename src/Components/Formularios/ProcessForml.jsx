@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input, InputNumber } from "antd";
 import React, { useState } from "react";
-import { agregarProceso } from "../api/procesos";
+import { agregarProceso } from "../../api/procesos";
 
 const ProcessForm = () => {
   const [form] = Form.useForm();
@@ -10,15 +10,11 @@ const ProcessForm = () => {
   };
 
   const onFinish = (values) => {
-    
     let data = {
       nombreProceso: values.nombreProceso,
       instanteEntrada: values.instanteEntrada,
       rafaga: values.rafaga,
-      
     };
-
-    console.log(data);
 
     agregarProceso(data);
 
@@ -39,7 +35,6 @@ const ProcessForm = () => {
       }}
       initialValues={{
         remember: true,
-        
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -85,7 +80,6 @@ const ProcessForm = () => {
         <InputNumber />
       </Form.Item>
 
-      
       <Form.Item
         wrapperCol={{
           offset: 8,

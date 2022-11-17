@@ -3,9 +3,11 @@ import { createRoot } from "react-dom/client";
 import { Button, DatePicker, Layout, Space, version } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
-import ModalForm from "./Components/ModalForm";
-import TabsAlgorithms from "./Components/TabsAlgorithms";
+import ModalForm from "./Components/Modals/ModalForm";
+import TabsAlgorithms from "./Components/Tabs/TabsAlgorithms";
 import ProcesosCargados from "./Components/ProcesosCargados";
+import TabsTablas from "./Components/Tabs/TabsTablas";
+import Quantum from "./Components/Formularios/Quantum";
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
@@ -22,9 +24,10 @@ const App = () => {
         <div>
           <ProcesosCargados />
         </div>
-        <h2>Algoritmos</h2>
 
-        <TabsAlgorithms size="large" />
+        <h1>Diagrama de Gantt</h1>
+
+        <TabsAlgorithms />
       </Content>
     </Layout>
   );

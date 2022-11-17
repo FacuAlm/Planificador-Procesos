@@ -1,35 +1,4 @@
 {
-  "procesos": [
-    {
-      "nombreProceso": "A",
-      "instanteEntrada": 0,
-      "rafaga": 3,
-      "id": 1
-    },
-    {
-      "nombreProceso": "B",
-      "instanteEntrada": 2,
-      "rafaga": 6,
-      "id": 2
-    },
-    {
-      "nombreProceso": "C",
-      "instanteEntrada": 4,
-      "rafaga": 4,
-      "id": 3
-    },
-    {
-      "nombreProceso": "D",
-      "instanteEntrada": 6,
-      "prioridad": 0,
-      "rafaga": 5,
-      "id": 4
-    },
-    {
-      "nombreProceso": "E",
-      "instanteEntrada": 8,
-      "rafaga": 2,
-      "id": 5
-    }
-  ]
+  "procesos": [],
+  "quantum": []
 }

@@ -1,30 +1,24 @@
 import { Tabs } from "antd";
 import React from "react";
-import Fifo from "./Fifo";
-import RoundRobin from "./RoundRobin";
-import Spn from "./Spn";
-import Srt from "./Srt";
-import { obtenerProcesos } from "../api/procesos";
+import TablaFifo from "../TablasAlgoritmos/TablaFifo";
+import TablaRoundRobin from "../TablasAlgoritmos/TablaRoundRobin";
+import TablaSPN from "../TablasAlgoritmos/TablaSPN";
 
-const resultado = await obtenerProcesos();
-
-console.log(resultado);
-
-const TabsAlgorithms = () => (
+const TabsTablas = () => (
   <Tabs defaultActiveKey="1">
     <Tabs.TabPane tab="First In First Out (FIFO)" key="1">
-      <Fifo />
+      <TablaFifo />
     </Tabs.TabPane>
     <Tabs.TabPane tab="Round Robin (RR)" key="2">
-      <RoundRobin />
+      <TablaRoundRobin/>
     </Tabs.TabPane>
     <Tabs.TabPane tab="Short Process Next (SPN)" key="3">
-      <Spn />
+      <TablaSPN/>
     </Tabs.TabPane>
 
     <Tabs.TabPane tab="Short Remaining Time (SRT)" key="4">
-      <Srt />
+      <TablaFifo />
     </Tabs.TabPane>
   </Tabs>
 );
-export default TabsAlgorithms;
+export default TabsTablas;
