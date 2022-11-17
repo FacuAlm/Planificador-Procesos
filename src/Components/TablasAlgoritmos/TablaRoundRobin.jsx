@@ -34,7 +34,7 @@ function calcularRoundRobin() {
       procesosEjecutados.push(proceso);
       procesosEjecutados[0].tiempoEspera = 0;
       procesosEjecutados[0].tiempoRetorno =
-        (procesosEjecutados[0].rafaga % quantum) + procesosEjecutados[0].rafaga;
+        (procesosEjecutados[0].rafaga % quantum);
       tiempo = procesosEjecutados[0].rafaga % quantum;
       procesosListos.push(proceso);
     } else {

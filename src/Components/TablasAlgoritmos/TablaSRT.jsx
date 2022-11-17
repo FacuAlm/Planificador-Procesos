@@ -8,32 +8,66 @@ let resultadoOrdenado = resultado.sort(
   (a, b) => a.instanteEntrada - b.instanteEntrada
 );
 
-function calcularSRT() {
+function shortRemainingTimeFirst(procesos) {
   let tiempo = 0;
+  let tiempoRetorno = 0;
+  let tiempoRetornoTotal = 0;
+  let tiempoServicioRestante = 0;
+  let procesoActual = null;
+  let procesosListos = [];
+  let procesosFinalizados = [];
+  let procesosEnEspera = [];
 
-  resultado.map((proceso, index) => {
-    if (index == 0) {
-      proceso.tiempoEspera = 0;
-      proceso.tiempoRetorno = proceso.rafaga;
-      tiempo = proceso.rafaga;
-    } else {
-      proceso.tiempoEspera = tiempo;
-      proceso.tiempoRetorno = tiempo + proceso.rafaga + 3;
-      tiempo = tiempo + proceso.rafaga;
+  while (
+    procesosFinalizados.length !== procesos.length ||
+    procesosEnEspera.length !== 0
+  ) {
+    procesos.forEach((proceso) => {
+      if (proceso.instanteEntrada === tiempo) {
+        procesosListos.push(proceso);
+      }
+    });
 
-      if (tiempo > proceso.instanteEntrada) {
-        tiempo = tiempo - proceso.instanteEntrada;
-
-        proceso.tiempoEspera = resultado[index - 1].tiempoRetorno;
-
-        proceso.tiempoRetorno = proceso.tiempoEspera + proceso.rafaga;
+    if (procesoActual === null) {
+      if (procesosListos.length !== 0) {
+        procesosListos.sort((a, b) => a.rafaga - b.rafaga);
+        procesoActual = procesosListos.shift();
+        tiempoServicioRestante = procesoActual.rafaga;
       }
     }
-  });
 
-  return resultado;
+    if (procesoActual !== null) {
+      tiempoServicioRestante--;
+      tiempo++;
+
+      if (tiempoServicioRestante === 0) {
+        tiempoRetorno = tiempo;
+        tiempoRetornoTotal += tiempoRetorno;
+        procesoActual.tiempoRetorno = tiempoRetorno;
+        procesosFinalizados.push(procesoActual);
+        procesoActual = null;
+      } else {
+        procesosEnEspera = procesosListos.filter(
+          (proceso) => proceso.rafaga < tiempoServicioRestante
+        );
+
+        if (procesosEnEspera.length !== 0) {
+          procesosEnEspera.sort((a, b) => a.rafaga - b.rafaga);
+          procesosListos = procesosListos.filter(
+            (proceso) => proceso.rafaga >= tiempoServicioRestante
+          );
+          procesosListos.unshift(procesoActual);
+          procesoActual = procesosEnEspera.shift();
+          tiempoServicioRestante = procesoActual.rafaga;
+        }
+      }
+    } else {
+      tiempo++;
+    }
+  }
+
+  return procesosFinalizados;
 }
-
 const TablaSRT = () => {
   const columns = [
     {
@@ -68,16 +102,17 @@ const TablaSRT = () => {
       key: "trts",
     },
   ];
-  const data = calcularSRT().map((proceso) => ({
-    key: proceso.nombreProceso,
-    nombreProceso: proceso.nombreProceso,
-    tiempoLlegada: proceso.instanteEntrada,
-    tiempoServicio: proceso.rafaga,
-    tiempoFinalizacion: proceso.tiempoRetorno - 1,
-    tr: proceso.tiempoRetorno - proceso.instanteEntrada - 1,
-    trts:
-      (proceso.tiempoRetorno - proceso.instanteEntrada - 1) / proceso.rafaga,
-  }));
+  const data = shortRemainingTimeFirst(resultadoOrdenado).map((proceso) => {
+    return {
+      key: proceso.id,
+      nombreProceso: proceso.nombreProceso,
+      tiempoLlegada: proceso.instanteEntrada,
+      tiempoServicio: proceso.rafaga,
+      tiempoFinalizacion: proceso.tiempoRetorno,
+      tr: proceso.tiempoRetorno - proceso.rafaga,
+      trts: (proceso.tiempoRetorno - proceso.rafaga) / proceso.rafaga,
+    };
+  });
 
   return <Table columns={columns} dataSource={data} />;
 };

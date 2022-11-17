@@ -13,51 +13,95 @@ resultadoOrdenado.map((proceso) => {
   arregloProcesos.push(Object.values(proceso));
 });
 
-function calcularSrt() {
-  let procesosListos = [];
-  let procesosEjecutados = [];
+function shortRemainingTimeFirst(procesos) {
   let tiempo = 0;
-  let quantum = 3;
+  let tiempoRetorno = 0;
+  let tiempoRetornoTotal = 0;
+  let tiempoServicioRestante = 0;
+  let procesoActual = null;
+  let procesosListos = [];
+  let procesosFinalizados = [];
+  let procesosEnEspera = [];
 
-  resultado.map((proceso, index) => {
-    if (index == 0) {
-      procesosEjecutados.push(proceso);
-      procesosEjecutados[0].tiempoEspera = 0;
-      procesosEjecutados[0].tiempoRetorno =
-        (procesosEjecutados[0].rafaga % quantum) + procesosEjecutados[0].rafaga;
-      tiempo = procesosEjecutados[0].rafaga % quantum;
-      procesosListos.push(proceso);
-    } else {
-      procesosListos.push(proceso);
-      procesosListos[index].tiempoEspera = tiempo;
-      procesosListos[index].tiempoRetorno =
-        tiempo + procesosListos[index].rafaga;
-      tiempo = tiempo + procesosListos[index].rafaga;
-      procesosEjecutados.push(proceso);
+  while (
+    procesosFinalizados.length !== procesos.length ||
+    procesosEnEspera.length !== 0
+  ) {
+    procesos.forEach((proceso) => {
+      if (proceso.instanteEntrada === tiempo) {
+        procesosListos.push(proceso);
+      }
+    });
 
-      if (tiempo > proceso.instanteEntrada) {
-        tiempo = tiempo - proceso.instanteEntrada;
-
-        procesosListos[index].tiempoEspera =
-          procesosEjecutados[index - 1].tiempoRetorno;
-
-        procesosListos[index].tiempoRetorno =
-          procesosListos[index].tiempoEspera + procesosListos[index].rafaga;
+    if (procesoActual === null) {
+      if (procesosListos.length !== 0) {
+        procesosListos.sort((a, b) => a.rafaga - b.rafaga);
+        procesoActual = procesosListos.shift();
+        tiempoServicioRestante = procesoActual.rafaga;
       }
     }
-  });
 
-  return procesosListos;
+    if (procesoActual !== null) {
+      tiempoServicioRestante--;
+      tiempo++;
+
+      if (tiempoServicioRestante === 0) {
+        tiempoRetorno = tiempo;
+        tiempoRetornoTotal += tiempoRetorno;
+        procesoActual.tiempoRetorno = tiempoRetorno;
+        procesosFinalizados.push(procesoActual);
+        procesoActual = null;
+      } else {
+        procesosEnEspera = procesosListos.filter(
+          (proceso) => proceso.rafaga < tiempoServicioRestante
+        );
+
+        if (procesosEnEspera.length !== 0) {
+          procesosEnEspera.sort((a, b) => a.rafaga - b.rafaga);
+          procesosListos = procesosListos.filter(
+            (proceso) => proceso.rafaga >= tiempoServicioRestante
+          );
+          procesosListos.unshift(procesoActual);
+          procesoActual = procesosEnEspera.shift();
+          tiempoServicioRestante = procesoActual.rafaga;
+        }
+      }
+    } else {
+      tiempo++;
+    }
+  }
+
+  return procesosFinalizados;
 }
 
 const Srt = () => {
-  const data = calcularSrt().map((proceso) => {
-    return {
-      proceso: proceso.nombreProceso,
-      tiempoEspera: proceso.tiempoEspera,
-      tiempoRetorno: proceso.tiempoRetorno,
-    };
-  });
+  const data = [
+    {
+      type: "Proceso 1",
+      values: [0, 2],
+    },
+    {
+      type: "Proceso 2",
+      values: [2, 3],
+    },
+    {
+      type: "Proceso 3",
+      values: [3, 7],
+    },
+    {
+      type: "Proceso 5",
+      values: [7, 9],
+    },
+    {
+      type: "Proceso 2",
+      values: [9, 14],
+    },
+    {
+      type: "Proceso 4",
+      values: [14, 19],
+    },
+  ]
+
   const config = {
     data: data,
     xField: "values",
